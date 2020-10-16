@@ -5,8 +5,12 @@
 - [Setup](#setup)
   - [Requirements](#requirements)
   - [Repository](#repository)
-  - [Config](#config)
-  - [Startup](#startup)
+  - [Configuration](#configuration)
+    - [auth.js](#)
+    - [config.js](#)
+  - [Running it](#running-it)
+- [Docker](#docker)
+  - [Local Development](#local-development)
 
 ## Setup
 
@@ -22,9 +26,31 @@ Make sure to add `--recurse-modules` behind the repository link so all submodule
 git clone https://github.com/Damon-Org/damon-base --recurse-modules
 ```
 
-### Config
+### Configuration
 
-Before starting up the bot it's important to set the development key to true in [`data/config.js`](data/config.js)
+All of these files reside under the [`data/`](data/) directory.
+
+#### auth.js
+
+By default this file does not exist, create this file yourself.
+
+In the `data/` directory you'll find an example auth file, copy and paste the contents of this file into auth.js (create this file if it doesn't exists).
+
+File contents:
+```js
+export default {
+    token: {
+        prod: '',
+        dev: '<put your development bot token here/if you only use one bot put your production token here as well>'
+    }
+}
+```
+
+#### config.js
+
+In the step above this we set our development and production bot tokens, in this [file](data/config.js) we set when to use which.
+
+If development is set to true the bot will use `token.dev` otherwise it will take `token.prod`.
 
 ```js
 {
@@ -34,7 +60,7 @@ Before starting up the bot it's important to set the development key to true in 
 }
 ```
 
-### Startup
+### Running it
 
 ```sh
 # Run npm i to install all of the node_modules
@@ -46,7 +72,7 @@ node .
 
 ## Docker
 
-Alternatively you can pull docker containers and run the bot from those or make containers locally.
+Alternatively you can develop and build containers locally.
 
 ### Local Development
 
@@ -62,14 +88,4 @@ docker rm damon -f
 
 # Start the container in the current command line, alternatively you can pass the -d flag to run it detached from your current shell
 docker run --init --name damon damonmusic:test_build
-```
-
-### Running in Cloud
-
-You can pull the containers from hub.docker.com and start these directly without having to build the source code locally.
-
-```sh
-docker pull yimura/damonmusic
-
-docker run -d --init --name damon yimura/damonmusic
 ```
