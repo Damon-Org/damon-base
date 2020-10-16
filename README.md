@@ -23,7 +23,7 @@
 Make sure to add `--recurse-modules` behind the repository link so all submodules get pulled as well.
 
 ```sh
-git clone https://github.com/Damon-Org/damon-base --recurse-modules
+git clone https://github.com/Damon-Org/damon-base --recurse-submodules
 ```
 
 ### Configuration
