@@ -1,0 +1,28 @@
+{
+  "name": "damon-base",
+  "version": "1.0.0",
+  "description": "This is based of off Damon Music and is the most basic configuration for a bot.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "docker build --tag damonbase:test_build . && docker rm damon_base -f && docker run --init --name damon_base damonbase:test_build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Damon-Org/damon-base.git"
+  },
+  "keywords": [
+    "discord.js"
+  ],
+  "author": "yimura",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Damon-Org/damon-base/issues"
+  },
+  "homepage": "https://github.com/Damon-Org/damon-base#readme",
+  "dependencies": {
+    "@yimura/import-dir": "^0.1.10",
+    "discord.js": "^12.3.1",
+    "humanize-duration": "^3.24.0"
+  }
+}

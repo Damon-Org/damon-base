@@ -1,0 +1,46 @@
+{
+    "informative": {
+        "commands": [
+            {
+                "name": "help",
+                "aliases": [
+                    "h"
+                ],
+                "description": "Gives a link to a website where you can find all the information you need.",
+                "usage": "help",
+                "params": [],
+                "example": "help"
+            },
+            {
+                "name": "invite",
+                "aliases": [
+                    "inv"
+                ],
+                "description": "Invite Damon to your Discord server.",
+                "usage": "invite",
+                "params": [],
+                "example": "invite"
+            },
+            {
+                "name": "ping",
+                "aliases": [
+                    "pong"
+                ],
+                "description": "Shows ping to Discord, response time and reply time.",
+                "usage": "ping",
+                "params": [],
+                "example": "ping"
+            },
+            {
+                "name": "stats",
+                "aliases": [
+                    "status"
+                ],
+                "description": "Shows a couple of stats about Damon.",
+                "usage": "stats",
+                "params": [],
+                "example": "stats"
+            }
+        ]
+    }
+}

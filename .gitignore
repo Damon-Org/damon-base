@@ -1,0 +1,6 @@
+log/*
+!log/.gitkeep
+
+data/auth.js
+
+node_modules/

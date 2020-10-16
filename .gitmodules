@@ -1,0 +1,6 @@
+[submodule "src/modules/CommandRegistrar"]
+	path = src/modules/CommandRegistrar
+	url = https://github.com/Damon-Org/CommandRegistrar
+[submodule "src/modules/CommandHandler"]
+	path = src/modules/CommandHandler
+	url = https://github.com/Damon-Org/CommandHandler
