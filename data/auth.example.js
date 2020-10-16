@@ -1,6 +1,6 @@
 export default {
-    "token": {
-        "prod": "",
-        "dev": ""
+    token: {
+        prod: '',
+        dev: ''
     }
 }
