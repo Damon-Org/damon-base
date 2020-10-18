@@ -1,21 +1,18 @@
 import importDir from '@yimura/import-dir'
-import ConstantsProxy from './module/ConstantsProxy.js'
+import ModuleProxy from './module/ModuleProxy.js'
 import log from '../util/Log.js'
 
-export default class ModuleManager {
+export default class ModuleManager extends ModuleProxy {
     _cache = new Map();
-    _constants = ConstantsProxy(this);
     _scope = {};
 
     /**
      * @param {Main} main The program entrypoint class
      */
     constructor(main) {
-        this._m = main;
-    }
+        super();
 
-    get constants() {
-        return this._constants;
+        this._m = main;
     }
 
     /**
