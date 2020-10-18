@@ -69,13 +69,6 @@ export default class Main extends DiscordClient {
     }
 
     /**
-     * @param {string} moduleName
-     */
-    getModule(moduleName) {
-        return this._moduleManager.get(moduleName);
-    }
-
-    /**
      * Disconnects the client and tells all modules to cleanup
      */
     async shutdown() {

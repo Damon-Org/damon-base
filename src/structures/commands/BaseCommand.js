@@ -18,13 +18,6 @@ export default class BaseCommand {
     }
 
     /**
-     * @param {string} moduleName
-     */
-    getModule(moduleName) {
-        return this._m.modules.get(moduleName);
-    }
-
-    /**
      * @param {*} instance The parent instance of this class
      * @param {Object} object
      * @param {boolean} internal If this is the raw register object
@@ -178,7 +171,7 @@ export default class BaseCommand {
         if (exception) {
             const prefix =  this.server.prefix;
 
-            embed.setDescription(`View the documentation of [this command on our site](${Website}/#/commands?c=${encodeURI(this.name)}&child=${encodeURI(command.replace(this.name, '').trim())}${prefix == this.getModule('commandRegistrar').defaultPrefix ? '' : `&p=${encodeURI(prefix)}`})`);
+            embed.setDescription(`View the documentation of [this command on our site](${Website}/#/commands?c=${encodeURI(this.name)}&child=${encodeURI(command.replace(this.name, '').trim())}${prefix == this.globalStorage.get('prefix') ? '' : `&p=${encodeURI(prefix)}`})`);
 
             this.textChannel.send(embed);
 
