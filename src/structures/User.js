@@ -20,9 +20,6 @@ export default class User {
     toJSON() {
         return flatten(this, {
             user: false,
-
-            banned: true,
-            permissionLevel: true
         });
     }
 }

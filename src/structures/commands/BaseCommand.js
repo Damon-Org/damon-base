@@ -104,6 +104,10 @@ export default class BaseCommand {
         return this.textChannel.send(p1, p2);
     }
 
+    get globalStorage() {
+        return this._m.globalStorage;
+    }
+
     get servers() {
         return this._m.servers;
     }
