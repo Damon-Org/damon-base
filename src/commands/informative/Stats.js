@@ -4,10 +4,10 @@ import humanReadableTime from 'humanize-duration'
 export default class Stats extends BaseCommand {
     /**
      * @param {string} category
-     * @param {Array<*>} args
+     * @param {Main} main
      */
-    constructor(category, ...args) {
-        super(...args);
+    constructor(category, main) {
+        super(main);
 
         this.register(Stats, {
             category: category,
@@ -24,7 +24,7 @@ export default class Stats extends BaseCommand {
     }
 
     /**
-     * @param {String} command string representing what triggered the command
+     * @param {string} command string representing what triggered the command
      */
     run(command) {
         const embed = new this.Discord.MessageEmbed()

@@ -23,7 +23,7 @@ export default class Help extends BaseCommand {
     }
 
     /**
-     * @param {String} command string representing what triggered the command
+     * @param {string} command string representing what triggered the command
      */
     run(command) {
         const embed = new this.Discord.MessageEmbed()
