@@ -1,6 +1,6 @@
-import { flatten } from '../util/Util.js'
+import Scope from './Scope.js';
 
-export default class User {
+export default class User extends Scope {
     /**
      * @param {Main} main
      * @param {User} user
@@ -11,15 +11,11 @@ export default class User {
         this.user = user;
 
         this.storage = new Map();
+
+        this.initScope('user');
     }
 
     get id() {
         return this.user.id;
-    }
-
-    toJSON() {
-        return flatten(this, {
-            user: false,
-        });
     }
 }

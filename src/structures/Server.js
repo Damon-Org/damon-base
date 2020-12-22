@@ -1,6 +1,7 @@
 import LocalUserStorage from './server/LocalUserStorage.js'
+import Scope from './Scope.js'
 
-export default class Server {
+export default class Server extends Scope {
     constructor(main, guild) {
         this._m = main;
 
@@ -8,18 +9,7 @@ export default class Server {
 
         this.localUsers = new LocalUserStorage();
 
-        this._initServerModules();
-    }
-
-    /**
-     * Initializes all registered server modules and clones their instances into the server class
-     */
-    _initServerModules() {
-        const modules = this._m.modules.getScope('server');
-
-        for (const [ name, module ] of modules) {
-            this[name] = module.clone(this);
-        }
+        this.initScope('server');
     }
 
     get id() {

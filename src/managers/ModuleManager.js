@@ -71,18 +71,21 @@ export default class ModuleManager extends ModuleProxy {
      * @param {*} module
      */
     _addModuleToScope(scope, module) {
-        if (!this._scope[scope]) this._scope[scope] = new Map();
+        if (!this._scope[scope.group]) this._scope[scope.group] = new Map();
+        if (this._scope[scope.group].has(scope.name)) {
+            log.error('MODULES', `Duplicate scoped module name error, module "${module.name}" with scope name "${scope.name}"`);
 
-        this._scope[scope].set(module.name, module);
+            return;
+        }
+
+        this._scope[scope.group].set(scope.name, module);
     }
 
     /**
      * @private
      */
     async _checkModuleRequirements() {
-        for (const module of this._cache) {
-           const [ name, instance ] = module;
-
+        for (const [ name, instance ] of this._cache) {
            if (instance.requires) {
                for (const requirement of instance.requires) {
                    if (!this._cache.has(requirement)) {
@@ -108,7 +111,7 @@ export default class ModuleManager extends ModuleProxy {
                }
            }
 
-           if (typeof instance.setup === 'function' && !await instance.setup()) return false;
+           if (typeof instance.init === 'function' && !await instance.init()) return false;
        }
 
        return true;
@@ -147,7 +150,7 @@ export default class ModuleManager extends ModuleProxy {
 
                         this._cache.set(instance.name, instance);
 
-                        this._addModuleToScope(instance.scope, instance);
+                        if (instance.scope) this._addModuleToScope(instance.scope, instance);
                     } catch (e) {
                         log.warn('MODULES', `Module is broken, ${parentName}`, e);
                     }
