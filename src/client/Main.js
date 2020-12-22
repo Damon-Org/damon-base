@@ -21,6 +21,8 @@ export default class Main extends DiscordClient {
     constructor(root_dir, token) {
         super(config.client_options);
 
+        this.bootUp = Date.now();
+
         Object.assign(this, {
             auth,
             config,
@@ -80,7 +82,7 @@ export default class Main extends DiscordClient {
     }
 
     /**
-     * @param {}
+     * Loads modules and logs our client in afterwards
      */
     async start() {
         await this._moduleManager.load();
