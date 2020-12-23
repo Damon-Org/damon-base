@@ -2,90 +2,68 @@
 
 ## Table Of Contents
 
-- [Setup](#setup)
-  - [Requirements](#requirements)
-  - [Repository](#repository)
-  - [Configuration](#configuration)
-    - [auth.js](#authjs)
-    - [config.js](#configjs)
-  - [Running it](#running-it)
-- [Docker](#docker)
-  - [Local Development](#local-development)
+ - [Getting Started](#getting-started)
+   - [Requirements](#requirements)
+   - [Getting the base](#getting-the-base)
+   - [Config](#config)
+   - [Setup](#setup)
+   - [Running](#running)
+ - [Documentation](#documentation)
 
-## Setup
+## Getting Started
 
 ### Requirements
 
- * Node.js v14.x or higher
+  - Git
+  - NodeJS v14+
 
-### Repository
+### Getting the base
 
-Make sure to add `--recurse-modules` behind the repository link so all submodules get pulled as well.
-
+Use the below command to clone the repo locally.
 ```sh
-git clone https://github.com/Damon-Org/damon-base --recurse-submodules
+git clone https://github.com/Damon-Org/damons-base.git --recurse-submodules
+```
+Don't forget to add `--recurse-submodules`, if you did forget then you must use the below command to setup submodules properly.
+```sh
+git submodule update --init
 ```
 
-### Configuration
+### Config
 
-All of these files reside under the [`data/`](data/) directory.
-
-#### auth.js
-
-By default this file does not exist, create this file yourself.
-
-In the `data/` directory you'll find an example auth file, copy and paste the contents of this file into auth.js (create this file if it doesn't exists).
-
-File contents:
+Create an application on [Discord Developer Application](https://discord.com/developers/applications), enable bot account and copy your bot token in auth.js file.
+If the file doesn't exist yet, create one from the example auth.example.js.
 ```js
 export default {
     token: {
-        prod: '',
-        dev: '<put your development bot token here/if you only use one bot put your production token here as well>'
+        prod: '<fill in your token here>',
+        dev: '<if you have a seperate token for development put it here>'
     }
 }
 ```
 
-#### config.js
+### Setup
 
-In the step above this we set our development and production bot tokens, in this [file](data/config.js) we set when to use which.
-
-If development is set to true the bot will use `token.dev` otherwise it will take `token.prod`.
-
-```js
-{
-    development: true,
-
-    // ...
-}
-```
-
-### Running it
+Before being able to run the bot you still have to install the required modules, if you have NodeJS installed as mentioned in the requirements above you should be able to do:
 
 ```sh
-# Run npm i to install all of the node_modules
-npm i
+npm install
+```
 
-# afterwards you can just
+### Running
+
+If everything went well you should be able to just do:
+```sh
 node .
 ```
-
-## Docker
-
-Alternatively you can develop and build containers locally.
-
-### Local Development
-
-When developing locally you might not want to install Node.js onto your system, for this you can build a container every time you make changes.
-
-Copy the following command from in the package.json file (since you don't have Node/NPM you can't run these commands from the package file).
-```sh
-# Build a container from the current directory
-docker build --tag damonmusic:test_build .
-
-# Remove the old container
-docker rm damon -f
-
-# Start the container in the current command line, alternatively you can pass the -d flag to run it detached from your current shell
-docker run --init --name damon damonmusic:test_build
+and see the following output
 ```
+[SHARD_MANAGER] Shard 1/1 is starting...
+[18:22:14] [COMMANDS/INFO] Mapping of commands done with 4 unique commands registered, 4 aliases registered.
+[18:22:14] [COMMANDS/INFO] Generated new "data/commands.json" with the mapped commands.
+```
+
+If you don't see any output other than `Shard 1/1 is starting...` then you failed to clone submodules correctly, run the following command `git submodule update --init` and see if it works.
+
+## Documentation
+
+For an in-depth documentation for how to use this base, continue reading [here](docs/README.md).
