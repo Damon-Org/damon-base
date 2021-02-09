@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "docker build --tag damonbase:test_build . && docker rm damon_base -f && docker run --init --name damon_base damonbase:test_build",
+    "start": "docker-compose build && docker-compose up -d",
+    "test": "docker-compose build && docker-compose up",
     "submodule-update": "git submodule foreach git pull",
     "submodule-init": "git submodule foreach git checkout master"
   },
