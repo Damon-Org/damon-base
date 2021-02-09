@@ -1,9 +1,10 @@
 import fs from 'fs'
 import util from 'util'
 
-const level_types = ['INFO', 'VERBOSE', 'WARNING', 'ERROR', 'CRITICAL'];
+const level_types = ['VERBOSE', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'];
 
 export default class log {
+    _logLevel = 'INFO';
     constructor() {}
 
     /**
@@ -18,39 +19,59 @@ export default class log {
 
         if (!level_types.includes(level)) throw new TypeError('Invalid logging level used!');
 
-        let
-            log = show_time ? `[${new Date().toLocaleTimeString()}] ` : '',
-            colors = ['', ''];
+        if (level_types.indexOf(this._logLevel) <= level_types.indexOf(level)) {
 
-        switch (level) {
-            case 'WARNING':
-                colors = ['\x1b[33m', '\x1b[0m'];
-                break;
-            case 'ERROR':
-            case 'CRITICAL':
-                colors = ['\x1b[31m', '\x1b[0m'];
-                break;
+            let log = show_time ? `[${new Date().toLocaleTimeString()}] ` : '', colors = ['', ''];
+
+            switch (level) {
+                case 'VERBOSE':
+                    colors = ['\x1b[34m', '\x1b[0m'];
+                    break;
+                case 'INFO':
+                    colors = ['\x1b[32m', '\x1b[0m'];
+                    break;
+                case 'WARNING':
+                    colors = ['\x1b[33m', '\x1b[0m'];
+                    break;
+                case 'ERROR':
+                    colors = ['\x1b[31m', '\x1b[0m'];
+                    break;
+                case 'CRITICAL':
+                    colors = ['\x1b[31m', '\x1b[0m'];
+                    break;
+            }
+
+            let msg = `${log}${colors[0]}[${name.toUpperCase()}/${level}]${colors[1]} ${message}`;
+
+            console.log(msg);
+            if (data) console.log(data);
+
+            if (level != 'VERBOSE') {
+                const date = new Date();
+
+                msg = `${log}[${name.toUpperCase()}/${level}] ${message}`;
+                if (data) message += `${util.format(data)}\n`;
+
+                fs.appendFile(
+                    `${process.cwd()}/log/${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()}-${level.toLowerCase()}.log`,
+                    message,
+                    (err) => {
+                        if (err) throw err;
+                    }
+                );
+            }
         }
+    }
 
-        let msg = `${log}${colors[0]}[${name.toUpperCase()}/${level}]${colors[1]} ${message}`;
-
-        console.log(msg);
-        if (data) console.log(data);
-
-        if (level != 'INFO') {
-            const date = new Date();
-
-            msg = `${log}[${name.toUpperCase()}/${level}] ${message}`;
-            if (data) message += `${util.format(data)}\n`;
-
-            fs.appendFile(
-                `${process.cwd()}/log/${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()}-${level.toLowerCase()}.log`,
-                message,
-                (err) => {
-                    if (err) throw err;
-                }
-            );
+    static setLogLevel(level){
+        level = level.toUpperCase();
+        if (!level_types.includes(level)) {
+            this._logLevel = level
+        } 
+        else {
+            throw new TypeError('Invalid logging level used!');
         }
+        
     }
 
     static info(...args) {
