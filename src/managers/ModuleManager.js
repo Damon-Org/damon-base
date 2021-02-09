@@ -1,6 +1,7 @@
-import importDir from '@yimura/import-dir'
+import ImportDir from '@yimura/import-dir'
 import ModuleProxy from './module/ModuleProxy.js'
 import log from '../util/Log.js'
+import { resolve } from 'path'
 
 export default class ModuleManager extends ModuleProxy {
     _cache = new Map();
@@ -53,7 +54,7 @@ export default class ModuleManager extends ModuleProxy {
     }
 
     async load() {
-        const modules = importDir(`${this._m.root}/src/modules/`, { recurse: true, recurseDepth: 1 });
+        const modules = ImportDir(resolve(`./src/modules/`), { recurse: true, recurseDepth: 1 });
 
         await this._importModules(modules);
 
@@ -61,8 +62,6 @@ export default class ModuleManager extends ModuleProxy {
             log.error('MODULES', 'Some modules did not meet their requirements.');
 
             process.exit(1);
-
-            return;
         }
     }
 
@@ -86,35 +85,37 @@ export default class ModuleManager extends ModuleProxy {
      */
     async _checkModuleRequirements() {
         for (const [ name, instance ] of this._cache) {
-           if (instance.requires) {
-               for (const requirement of instance.requires) {
-                   if (!this._cache.has(requirement)) {
-                       log.error('MODULES', `Module "${name}" has an unmet requirement "${requirement}"`);
+            if (instance.requires) {
+                for (const requirement of instance.requires) {
+                    if (!this._cache.has(requirement)) {
+                        log.error('MODULES', `Module "${name}" has an unmet requirement "${requirement}"`);
 
-                       return false;
-                   }
-               }
-           }
+                        return false;
+                    }
+                }
+            }
 
-           if (instance.events) {
-               for (const _event of instance.events) {
-                   if (_event.mod) {
-                       const mod = this._cache.get(_event.mod);
-                       if (mod) {
-                           mod.on(_event.name, (...args) => instance[_event.call](...args));
+            if (instance.events) {
+                for (const _event of instance.events) {
+                    if (_event.mod) {
+                        const mod = this._cache.get(_event.mod);
+                        if (mod) {
+                            mod.on(_event.name, instance[_event.call].bind(instance));
 
-                           continue;
-                       }
-                   }
+                            continue;
+                        }
+                    }
 
-                   if (typeof this._m.on === 'function') this._m.on(_event.name, (...args) => instance[_event.call](...args));
-               }
-           }
+                    if (typeof this._m.on === 'function') this._m.on(_event.name, instance[_event.call].bind(instance));
+                }
+            }
+        }
 
-           if (typeof instance.init === 'function' && !await instance.init()) return false;
-       }
+        for (const [ name, instance ] of this._cache) {
+            if (typeof instance.init === 'function' && !await instance.init()) return false;
+        }
 
-       return true;
+        return true;
     }
 
     /**
