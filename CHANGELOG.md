@@ -9,6 +9,16 @@ Following:
 * **minor** used whenever a single file was rewritten or significant change happened
 * **patch** may only be bumped after a bug was resolved as whole
 
+## 2020-02-09, Version 1.3.0, @Yimura
+
+### Changes
+
+ * A docker-compose file was added as an example
+ * The start & test scripts have been swapped out with docker-compose
+ * ModuleManager has fixes making the init happen after all modules have had their events mapped
+ * Logger has been reviewed and added verbose log level
+ * The command registrar has been changed to allow for other modules to register their own commands
+
 ## 2020-12-22, Version 1.2.0, @Yimura
 
 ### Changes
