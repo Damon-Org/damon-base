@@ -9,6 +9,12 @@ Following:
 * **minor** used whenever a single file was rewritten or significant change happened
 * **patch** may only be bumped after a bug was resolved as whole
 
+## 2020-02-11, Version 1.3.1, @Yimura
+
+### Changes
+
+ * Added parsing of command arguments (see [here](https://github.com/Damon-Org/damon-base/commit/afe76c78bff0f0222484023288baaf43fc8f55fe))
+
 ## 2020-02-09, Version 1.3.0, @Yimura
 
 ### Changes
