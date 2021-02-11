@@ -6,6 +6,8 @@ export default class User extends Scope {
      * @param {User} user
      */
     constructor(main, user) {
+        super();
+
         this._m = main;
 
         this.user = user;
