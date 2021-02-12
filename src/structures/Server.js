@@ -3,6 +3,8 @@ import Scope from './Scope.js'
 
 export default class Server extends Scope {
     constructor(main, guild) {
+        super();
+
         this._m = main;
 
         this.guild = guild;

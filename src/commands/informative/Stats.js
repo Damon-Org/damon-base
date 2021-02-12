@@ -37,8 +37,7 @@ export default class Stats extends BaseCommand {
 
         if (this._m.shard.count <= 1) {
             embed.addField('Total Guild Count', this._m.guilds.cache.size);
-        }
-        else {
+        } else {
             embed.addField('This instance is managing', `${this._m.guilds.cache.size} servers`);
         }
 

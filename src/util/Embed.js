@@ -6,7 +6,7 @@ import { MessageEmbed } from 'discord.js'
  * @param {boolean} [edit=true] If the message should be directly edited with the new embed data
  */
 export const editEmbed = (msgObj, newProps, edit = true) => {
-    if (msgObj.deleted || msgObj.embeds.length == 0) return null;
+    if (msgObj.deleted || msgObj.embeds.length === 0) return null;
 
     const embedData = msgObj.embeds[0].toJSON();
 
@@ -17,7 +17,6 @@ export const editEmbed = (msgObj, newProps, edit = true) => {
     if (edit) msgObj.edit(embed)
 
     return embed;
-
 };
 
 export default {
