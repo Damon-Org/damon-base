@@ -54,7 +54,7 @@ export default class BaseCommand extends Map {
     }
 
     get user() {
-        return this.users.get(this.msgObj.author);
+        return this.msgObj.author;
     }
 
     get users() {
