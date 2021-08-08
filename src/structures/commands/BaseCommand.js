@@ -224,6 +224,17 @@ export default class BaseCommand extends Map {
     }
 
     /**
+    * Extract the snowflake out of a mention
+    * @private
+    * @param {string} mention 
+    */
+    _extractSnowflake(mention) {
+        const snowflake = mention.match(/\d+/g);
+
+        return snowflake?.length === 1 ? snowflake[0] : mention;
+    }
+
+    /**
      * Checks if the bot has the required permissions to properly execute the command it was asked to execute
      * @private
      */
@@ -363,12 +374,12 @@ export default class BaseCommand extends Map {
 
             switch (param.type) {
                 case 'channel':
-                    argument =  this._msg.mentions.channels.get(arg);
+                    argument =  this._msg.mentions.channels.get(this._extractSnowflake(arg));
                     if (!argument) argument = null;
 
                     break;
                 case 'member':
-                    argument =  this._msg.mentions.members.get(arg);
+                    argument =  this._msg.mentions.members.get(this._extractSnowflake(arg));
                     if (!argument) argument = null;
 
                     break;
@@ -385,7 +396,7 @@ export default class BaseCommand extends Map {
 
                     break;
                 case 'role':
-                    argument =  this._msg.mentions.roles.get(arg);
+                    argument =  this._msg.mentions.roles.get(this._extractSnowflake(arg));
                     if (!argument) argument = null;
 
                     break;
@@ -399,7 +410,7 @@ export default class BaseCommand extends Map {
                     
                     break;
                 case 'user':
-                    argument =  this._msg.mentions.users.get(arg);
+                    argument =  this._msg.mentions.users.get(this._extractSnowflake(arg));
                     if (!argument) argument = null;
 
                     break;
